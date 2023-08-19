@@ -7,7 +7,7 @@
   A user-friendly financial management application built using Python and Tkinter.
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-  [![GitHub Stars](https://img.shields.io/github/stars/Aayush518/KhataSabaiko.svg)](https://github.com/Aayush518/KhataSabaiko/stargazers)
+ 
 </div>
 
 ## Table of Contents
@@ -91,6 +91,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 For questions or inquiries, please contact [adhikariaayush37@gmail.com](mailto:adhikariaayush37@gmail.com).
-```
-
-This README template is more detailed and includes placeholders for adding screenshots and additional acknowledgments. Remember to customize the content and add your own images/screenshots to make it stylish and relevant to your project.
