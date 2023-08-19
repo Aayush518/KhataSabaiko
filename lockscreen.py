@@ -12,7 +12,7 @@ credentials.load_credentials()
 
 # --------------Fonts--------------- #
 
-huge_font = ('Comic Sans MS', 60, 'bold')
+huge_font = ('Comic Sans MS', 70, 'bold')
 medium_font = ('Comic Sans MS', 49)
 small_font = ('Comic Sans MS', 30)
 tiny_font = ('Comic Sans MS', 20)
@@ -21,7 +21,7 @@ very_small = ('Comic Sans MS', 15)
 
 
 # ---------------VARIABLES----------#
-fcompany_name = 'KHATA SABAIKO'
+fcompany_name = 'खाता सबैको'
 background = '#94ffd6'
 date_bg = '#fff78a'
 login_bg= '#70d7ff'
@@ -51,6 +51,8 @@ class LockScreen(Frame):
 
         head = Label(self, text=fcompany_name, font=huge_font, fg='#ffb536', bg=background)
         head.grid(row=2, column=2, sticky=NSEW,columnspan=3)
+        head.config(justify=CENTER)
+        
 
         date_frame = Frame(self, height=350, width=350, bg=date_bg, padx=40, pady=40, relief=GROOVE, bd=5)
         date_frame.grid(row=4, column=2, sticky=E)

@@ -149,7 +149,7 @@ class Dealers(Frame):
                 Label(head_frame, text='Phone:' + str(contact), font=small_font, bg=bg,fg='brown').grid(row=2, column=1,sticky='nw', padx=10, pady=10)
                 Label(head_frame, text='Address:' + str(address), font=small_font, bg=bg,fg='brown').grid(row=3, sticky='nw',column=1, padx=10, pady=10)
                 Label(head_frame, text='Balance:', font=small_font, bg=bg,fg='brown').grid(row=4, column=1, sticky='nw', padx=10, pady=10)
-                Label(head_frame, text='Rs.' + str(balance), font=medium_font, bd=5, bg='#fa582f', fg='white',relief=GROOVE, width=10).grid(row=4, column=2, sticky='nw', padx=10, pady=10)
+                Label(head_frame, text='Rs.' + str(balance), font=small_font, bd=5, bg='#fa582f', fg='white',relief=GROOVE, width=15).grid(row=4, column=2, sticky='nw', padx=10, pady=10)
 
                 info_frame = Frame(info_window, bg='yellow', relief=GROOVE, bd=5)
                 info_frame.pack(padx=10, pady=10, fill=BOTH, expand=True, side=BOTTOM)

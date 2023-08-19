@@ -15,6 +15,8 @@ from sales import Sales
 from lockscreen import fcompany_name
 from tkinter import ttk
 from settings import SettingsPage
+
+
 # ------------- MAIN APP ----------#
 
 
