@@ -4,8 +4,11 @@ import datetime as addate
 import nepali_datetime as datetime
 import calendar
 from time import strftime
-from credentials import username
-from credentials import password
+import credentials
+from settings import SettingsPage
+
+
+credentials.load_credentials()
 
 # --------------Fonts--------------- #
 
@@ -31,6 +34,7 @@ if (len(partion_names)>3) and (len(partion_names)<=5):
 elif len(partion_names)>5:
     fcompany_name = ' '.join(partion_names[:3])+ '\n'+ ' '.join(partion_names[3:])
 
+ 
 
 # ----------Lock Screen---------------#
 
@@ -62,6 +66,15 @@ class LockScreen(Frame):
 
         dates = Label(date_frame, font=medium_font, fg='#711994', bg=date_bg)
         dates.pack()
+        self.settings_button = Button(self, text="Settings", font=tiny_font, bg='gray', fg='white', bd=4, relief=GROOVE, command=self.open_settings)
+        self.settings_button.grid(row=5, column=5, sticky=SE, padx=10, pady=10)
+
+        
+    
+        
+
+
+
 
 # --------------Updating time and date ------------------#
 
@@ -88,11 +101,14 @@ class LockScreen(Frame):
         pw = Entry(login_frame, font=tiny_font, width=12, show='*')
         pw.place(x=220, y=70)
 
+        def settings(self):
+            self.controller.show_frame("SettingsPage")
 # --------------Login function------------#
         def login_f():
             u = un.get()
             p = pw.get()
-            if u == username and p == password:
+            default_username, default_password = credentials.load_credentials()
+            if u == default_username and p == default_password:
                 controller.show_frame('StatementsPage')
             elif (u=='' or p==''):
                 messagebox.showerror(title='Error', message='Please fill the username and password to login.')
@@ -113,3 +129,37 @@ class LockScreen(Frame):
 
         forgot.place(x=50, y=125)
         login.place(x=250, y=125)
+
+    def open_settings(self):
+        settings_popup = Toplevel(self)
+        settings_popup.title("Settings")
+
+        # Set the background color of the settings page to blue
+        settings_popup.configure(bg='aqua')
+
+        # New Username label and entry
+        username_label = Label(settings_popup, text="New Username:", font=tiny_font, bg='aqua')
+        username_label.grid(row=0, column=0, padx=10, pady=5)
+
+        new_username_entry = Entry(settings_popup, font=tiny_font)
+        new_username_entry.grid(row=0, column=1, padx=10, pady=5)
+
+        # New Password label and entry
+        password_label = Label(settings_popup, text="New Password:", font=tiny_font, bg='aqua')
+        password_label.grid(row=1, column=0, padx=10, pady=5)
+
+        new_password_entry = Entry(settings_popup, font=tiny_font, show="*")
+        new_password_entry.grid(row=1, column=1, padx=10, pady=5)
+
+        # Update button with green background
+        update_button = Button(settings_popup, text="Update", font=tiny_font, bg='green', fg='white', command=lambda: self.update_settings(new_username_entry.get(), new_password_entry.get()))
+        update_button.grid(row=2, columnspan=2, padx=10, pady=10)
+
+    def update_settings(self, new_username, new_password):
+        credentials.save_credentials(new_username, new_password)
+        messagebox.showinfo("Success", "Settings updated successfully!")
+
+
+
+
+

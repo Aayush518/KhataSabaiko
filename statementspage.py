@@ -4,6 +4,7 @@ from nepali_datetime import date
 from time import strftime
 from functions import *
 from tkinter import ttk
+import uuid
 
 # --------------Fonts--------------- #
 medium_font = ('Footlight MT Light', 55)
@@ -88,26 +89,32 @@ class StatementsPage(Frame):
             entry_window = Toplevel(self, bg=bg, padx=20, pady=20)
             entry_window.title('Add Transaction')
 
-            lan = Label(entry_window, text='Enter transaction details:', font=small_font, bg = bg)
+            lan = Label(entry_window, text='Enter transaction details:', font=small_font, bg=bg)
             lan.grid(row=1, column=1, columnspan=4)
 
-            time_l = Label(entry_window, text='Time:', font=tree_font, bg = bg).grid(row=2, column=1)
-            date_l = Label(entry_window, text='Date:', font=tree_font, bg = bg).grid(row=2, column=3)
+            time_l = Label(entry_window, text='Time:', font=tree_font, bg=bg).grid(row=2, column=1)
+            date_l = Label(entry_window, text='Date:', font=tree_font, bg=bg).grid(row=2, column=3)
 
-            ref_l = Label(entry_window, text='Ref. No.', font=tree_font, bg = bg).grid(row=3, column=1)
-            name_l = Label(entry_window, text='Name:', font=tree_font, bg = bg).grid(row=4, column=1)
-            address_l = Label(entry_window, text='Address:', font=tree_font, bg = bg).grid(row=4, column=3)
-            remarks_l = Label(entry_window, text='Remarks:', font=tree_font, bg = bg).grid(row=3, column=3)
-            debit_l = Label(entry_window, text='Debit', font=tree_font, bg = bg).grid(row=6, column=1)
-            credit_l = Label(entry_window, text='Credit', font=tree_font, bg = bg).grid(row=6, column=3)
+            ref_l = Label(entry_window, text='Ref. No.:', font=tree_font, bg=bg)
+            ref_l.grid(row=3, column=1)
+
+            short_ref = str(uuid.uuid4().int)[3:8]  # Generate reference number with 3 to 5 digits
+            ref = Entry(entry_window, font=tree_font)
+            ref.insert(0, short_ref)
+            ref.grid(row=3, column=2)
+
+            name_l = Label(entry_window, text='Name:', font=tree_font, bg=bg).grid(row=4, column=1)
+            address_l = Label(entry_window, text='Address:', font=tree_font, bg=bg).grid(row=4, column=3)
+            remarks_l = Label(entry_window, text='Remarks:', font=tree_font, bg=bg).grid(row=3, column=3)
+            debit_l = Label(entry_window, text='Debit', font=tree_font, bg=bg).grid(row=6, column=1)
+            credit_l = Label(entry_window, text='Credit', font=tree_font, bg=bg).grid(row=6, column=3)
 
             tdate = Entry(entry_window, font=tree_font)
             tdate.insert(0, date.today())
             ttime = Entry(entry_window, font=tree_font)
-            ttime.insert(0, strftime('%H: %M'))
+            ttime.insert(0, strftime('%H:%M'))
             n = StringVar()
 
-            ref = Entry(entry_window, font=tree_font)
             name = ttk.Combobox(entry_window, width=19, textvariable=n, font=tree_font)
             name['values'] = get_all_names()
 
@@ -120,40 +127,47 @@ class StatementsPage(Frame):
 
             def selection():
                 global ttype
-                ttype='None'
+                ttype = 'None'
                 choice = var.get()
                 if choice == 1:
                     ttype = 'Customer'
-                elif choice ==2:
+                elif choice == 2:
                     ttype = 'Dealer'
                 return ttype
+
             def callback(eventObject):
-                
-                name = eventObject.widget.get()
-                addr =gimme_address(name)
-                address.insert(0, addr)                
+                selected_name = eventObject.widget.get()
+                addr = gimme_address(selected_name)
+                address.delete(0, END)  # Clear any existing content
+                address.insert(0, addr)
+
             name.bind("<<ComboboxSelected>>", callback)
 
-            cradio = Radiobutton(entry_window, text='Customer', variable = var, value = 1, command=selection, font=tree_font,bg=bg)
-            dradio = Radiobutton(entry_window, text='Dealer', variable = var, value = 2, command = selection,font=tree_font,bg= bg)
+            cradio = Radiobutton(entry_window, text='Customer', variable=var, value=1, command=selection, font=tree_font, bg=bg)
+            dradio = Radiobutton(entry_window, text='Dealer', variable=var, value=2, command=selection, font=tree_font, bg=bg)
 
             ttime.grid(row=2, column=2)
             tdate.grid(row=2, column=4)
-            ref.grid(row=3, column=2)
             name.grid(row=4, column=2)
             address.grid(row=4, column=4)
             remarks.grid(row=3, column=4)
             debit.grid(row=6, column=2)
             credit.grid(row=6, column=4)
             cradio.grid(row=7, column=2)
-            dradio.grid(row=7, column =4)
+            dradio.grid(row=7, column=4)
 
             add_buttn = Button(entry_window, text='CONFIRM', font=small_font, bd=5, bg='#b494ff', relief=GROOVE,
-                               command=lambda: get_to_add())
+                            command=lambda: get_to_add())
             add_buttn.grid(row=8, column=1, columnspan=4)
             global values
-            ttype=selection()
+            ttype = selection()
             values = [tdate, ttime, ref, name, address, 'ttype', remarks, debit, credit]
+
+# Rest of the code...
+
+
+# Rest of the code...
+
 
         def get_to_add():
             entered_values = []

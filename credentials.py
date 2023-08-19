@@ -1,11 +1,21 @@
+import json
 
-# -------------Username and passwords---------#
-"""
-The default username and password are given here. You are requested to change the default username
-and password as your wish.
+# Default credentials
+default_username = 'root'
+default_password = 'root'
 
-ALSO CONSIDER REMOVING THE POPUP BOX  TO PREVENT THE 'WRONG CREDENTIALS ERROR'
-"""
-username = 'root'
-password = 'root'
+def save_credentials(username, password):
+    credentials = {
+        'username': username,
+        'password': password
+    }
+    with open('credentials.json', 'w') as file:
+        json.dump(credentials, file)
 
+def load_credentials():
+    try:
+        with open('credentials.json', 'r') as file:
+            credentials = json.load(file)
+            return credentials['username'], credentials['password']
+    except (FileNotFoundError, json.JSONDecodeError):
+        return default_username, default_password

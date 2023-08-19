@@ -1,7 +1,7 @@
 #--------------For VAT and Stocks----------------#
 
 import sqlite3
-from datetime import date
+from nepali_datetime import date
 
 conn = sqlite3.connect('stock&vat.db')
 c = conn.cursor()
