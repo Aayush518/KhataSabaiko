@@ -6,7 +6,6 @@
 
   A user-friendly financial management application built using Python and Tkinter.
 
-  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
  
 </div>
 
